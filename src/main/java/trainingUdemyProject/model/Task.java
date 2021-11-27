@@ -1,9 +1,6 @@
 package trainingUdemyProject.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 //import org.hibernate.annotations.Entity;
 //import org.hibernate.annotations.Table;
 
@@ -11,6 +8,7 @@ import javax.persistence.Table;
 @Table(name = "tasks")
 public class Task {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(name = "description")
     private String description;
