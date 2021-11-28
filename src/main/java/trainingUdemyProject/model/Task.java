@@ -1,6 +1,7 @@
 package trainingUdemyProject.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 //import org.hibernate.annotations.Entity;
 //import org.hibernate.annotations.Table;
 
@@ -11,6 +12,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "description")
+    @NotBlank(message = "task's description must not be empty")
     private String description;
     private boolean done;
 
