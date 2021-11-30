@@ -2,6 +2,7 @@ package trainingUdemyProject.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +18,13 @@ public class TaskController {
     }
 //    @RequestMapping(method = RequestMethod.GET, path = "/tasks")
     @GetMapping(value = "/tasks", params = {"!sort", "!page", "!size"})
-
     ResponseEntity<?> readAllTask() {
         LOG.warn("Exposing all the tasks!");
         return ResponseEntity.ok(taskRepository.findAll());
+    }
+    @GetMapping(value = "/tasks")
+    ResponseEntity<?> readAllTask(Pageable pageable) {
+        LOG.warn("Custom pageable");
+        return ResponseEntity.ok(taskRepository.findAll(pageable));
     }
 }
