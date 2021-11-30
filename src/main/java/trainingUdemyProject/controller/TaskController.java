@@ -3,15 +3,16 @@ package trainingUdemyProject.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 import trainingUdemyProject.model.Task;
 import trainingUdemyProject.model.TaskRepository;
 
 import java.util.List;
 
-@RepositoryRestController
+@RestController
 public class TaskController {
     private static final Log LOG = LogFactory.getLog(TaskController.class);
     private final TaskRepository taskRepository;
