@@ -13,13 +13,12 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 
     @Override
     @RestResource(exported = false)
-    default void deleteById(Integer integer) {
+    void deleteById(Integer integer);
 
-    }
     @Override
     @RestResource(exported = false)
-    default void delete(Task entity) {
-    }
+    void delete(Task entity);
+
     @RestResource(path = "done", rel = "done")
     List<Task> findByDone(@Param("state") boolean done);
 }
