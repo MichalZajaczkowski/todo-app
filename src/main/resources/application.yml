@@ -5,7 +5,7 @@ spring:
   datasource:
 
     url: 'jdbc:h2:file:Y:/Project/todo-app/todo-db'
-task.allowMultipleTasksFromTemplates: 'test'
+task.allowMultipleTasksFromTemplates: false
 
 
 #spring.jpa.properties.hibernate.hbm2ddl.auto=create
