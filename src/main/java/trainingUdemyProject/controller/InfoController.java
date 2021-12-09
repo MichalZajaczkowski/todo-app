@@ -19,8 +19,9 @@ public class InfoController {
     String url() {
         return dataSource.getUrl();
     }
+
     @GetMapping("/info/prop")
     boolean myProp() {
-        return myProp.isAllowMultipleTasksFromTemplates();
+        return myProp.getTemplate().isAllowMultipleTasks();
     }
 }
