@@ -4,4 +4,6 @@ spring:
     path: '/console'
   datasource:
     url: 'jdbc:h2:file:Y:/Project/todo-app/todo-db'
-task.template.allowMultipleTasks: false
+  jpa:
+    hibernate:
+      ddl-auto: update
