@@ -12,13 +12,12 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "description")
     @NotBlank(message = "Task's description must not be empty")
     private String description;
     private boolean done;
     private LocalDateTime deadline;
     private LocalDateTime createdOn;
-    private LocalDateTime updateOn;
+    private LocalDateTime updatedOn;
 
     public Task() {
     }
@@ -55,7 +54,7 @@ public class Task {
         this.deadline = deadline;
     }
 
-    public void updateFrom(Task source) {
+    public void updateFrom(final Task source) {
         description = source.description;
         done = source.done;
         deadline = source.deadline;
@@ -67,7 +66,7 @@ public class Task {
     }
 
     @PreUpdate
-    void preUpdate() {
-        updateOn = LocalDateTime.now();
+    void preMerge() {
+        updatedOn = LocalDateTime.now();
     }
 }
