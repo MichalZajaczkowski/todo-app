@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tasks")
-public class Task extends BaseAuditableEntity{
+public class Task extends Audit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
