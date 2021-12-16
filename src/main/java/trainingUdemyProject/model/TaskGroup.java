@@ -9,7 +9,7 @@ import java.util.Set;
 //import org.hibernate.annotations.Table;
 
 @Entity
-@Table(name = "tasks_groups")
+@Table(name = "task_groups")
 public class TaskGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +17,6 @@ public class TaskGroup {
     @NotBlank(message = "Task's group's description must not be empty")
     private String description;
     private boolean done;
-    @Embedded
-    private Audit audit = new Audit();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
     private Set<Task> tasks;
 
