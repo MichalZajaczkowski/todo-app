@@ -3,6 +3,8 @@ package trainingUdemyProject.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 //import org.hibernate.annotations.Entity;
 //import org.hibernate.annotations.Table;
 
@@ -17,6 +19,8 @@ public class TaskGroup {
     private boolean done;
     @Embedded
     private Audit audit = new Audit();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
+    private Set<Task> tasks;
 
     public TaskGroup() {
     }
@@ -43,5 +47,13 @@ public class TaskGroup {
 
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
     }
 }
