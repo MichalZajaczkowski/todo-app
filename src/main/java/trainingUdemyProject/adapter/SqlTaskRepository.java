@@ -1,4 +1,4 @@
-package trainingUdemyProject.model;
+package trainingUdemyProject.adapter;
 
 
 import org.springframework.data.annotation.QueryAnnotation;
@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import trainingUdemyProject.model.Task;
+import trainingUdemyProject.model.TaskRepository;
 
 
 @Repository
