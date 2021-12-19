@@ -7,7 +7,8 @@ import trainingUdemyProject.model.TaskGroupRepository;
 
 import java.time.LocalDateTime;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -30,10 +31,15 @@ class ProjectServiceTest {
         //system under test
         var toTest = new ProjectService(null, mockGroupRepository, mocConfig);
 
-        //when + then
-        assertThatIllegalStateException()
-                .isThrownBy(() -> toTest.createGroup(LocalDateTime.now(),0));
-        //then
-
+//        //when + then
+//        assertThatIllegalStateException()
+//                .isThrownBy(() -> toTest.createGroup(LocalDateTime.now(),0));
+//        //then
+        //when
+        var exception = catchThrowable(() -> toTest.createGroup(LocalDateTime.now(),0));
+        // then
+        assertThat(exception)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("one undone group");
     }
 }
