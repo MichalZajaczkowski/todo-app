@@ -1,4 +1,4 @@
-package io.github.mat3e.logic;
+package trainingUdemyProject.logic;
 
 
 import org.springframework.stereotype.Service;
