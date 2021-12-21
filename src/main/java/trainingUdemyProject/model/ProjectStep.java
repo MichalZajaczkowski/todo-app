@@ -16,7 +16,7 @@ public class ProjectStep {
     @JoinColumn(name = "project_id")
     private Project project;
 
-     public int getId() {
+    public int getId() {
         return id;
     }
 
@@ -24,7 +24,7 @@ public class ProjectStep {
         this.id = id;
     }
 
-     public String getDescription() {
+    public String getDescription() {
         return description;
     }
 
@@ -32,11 +32,11 @@ public class ProjectStep {
         this.description = description;
     }
 
-     public int getDaysToDeadline() {
+    public int getDaysToDeadline() {
         return daysToDeadline;
     }
 
-    void setDaysToDeadline(int daysToDeadline) {
+    public void setDaysToDeadline(int daysToDeadline) {
         this.daysToDeadline = daysToDeadline;
     }
 
