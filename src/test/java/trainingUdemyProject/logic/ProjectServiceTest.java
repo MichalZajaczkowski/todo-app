@@ -6,7 +6,9 @@ import trainingUdemyProject.TaskConfigurationProperties;
 import trainingUdemyProject.model.ProjectRepository;
 import trainingUdemyProject.model.TaskGroup;
 import trainingUdemyProject.model.TaskGroupRepository;
+import trainingUdemyProject.model.projection.GroupReadModel;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -74,7 +76,7 @@ class ProjectServiceTest {
         TaskConfigurationProperties mocConfig = configurationReturning(true);
 
         //system under test
-        var toTest = new ProjectService(mockRepository, null, mocConfig);
+        var toTest = new ProjectService(mockRepository, mockGroupRepository, mocConfig);
 
         //when
         var exception = catchThrowable(() -> toTest.createGroup(LocalDateTime.now(),0));
@@ -88,12 +90,22 @@ class ProjectServiceTest {
     @DisplayName("should create a new group from project")
     void createGroup_configurationOk_existingProject_createsAndSaving() {
         // given
+        var today = LocalDate.now().atStartOfDay();
+        // and
         var mockRepository =mock(ProjectRepository.class);
         when(mockRepository.findById(anyInt())).thenReturn(Optional.empty());
         // and
-        TaskGroupRepository inMemoryGroupRepository = inMemoryGroupRepository();
+        inMemoryGroupRepository inMemoryGroupRepository = inMemoryGroupRepository();
+        int countBeforeCall = inMemoryGroupRepository.count();
         // and
         TaskConfigurationProperties mocConfig = configurationReturning(true);
+        //system under test
+        var toTest = new ProjectService(mockRepository, inMemoryGroupRepository, mocConfig);
+        //when
+        GroupReadModel result = toTest.createGroup(today, 1);
+        //then
+        assertThat(countBeforeCall +1)
+                .isEqualTo(inMemoryGroupRepository.count());
     }
 
     private TaskGroupRepository groupRepositoryReturning(boolean result) {
@@ -109,41 +121,47 @@ class ProjectServiceTest {
         when(mocConfig.getTemplate()).thenReturn(mockTemplate);
         return mocConfig;
     }
-    private TaskGroupRepository inMemoryGroupRepository() {
-        return new TaskGroupRepository() {
+    private inMemoryGroupRepository inMemoryGroupRepository() {
+        return new inMemoryGroupRepository();
+    }
+
+    private static  class inMemoryGroupRepository implements TaskGroupRepository{
 
             private int index = 0;
             private Map<Integer, TaskGroup> map = new HashMap<>();
 
+            public int count() {
+                return map.values().size();
+            }
+
             @Override
             public List<TaskGroup> findAll() {
-                return new ArrayList<>(map.values());
-            }
+            return new ArrayList<>(map.values());
+        }
 
             @Override
             public Optional<TaskGroup> findById(Integer id) {
-                return Optional.ofNullable(map.get(id));
-            }
+            return Optional.ofNullable(map.get(id));
+        }
 
             @Override
             public TaskGroup save(TaskGroup entity) {
-                if (entity.getId() == 0) {
-                    try {
-                        TaskGroup.class.getDeclaredField("id").set(entity, ++index);
-                    } catch (NoSuchFieldException | IllegalAccessException e) {
-                        throw new RuntimeException(e);
-                    }
+            if (entity.getId() == 0) {
+                try {
+                    TaskGroup.class.getDeclaredField("id").set(entity, ++index);
+                } catch (NoSuchFieldException | IllegalAccessException e) {
+                    throw new RuntimeException(e);
                 }
-                map.put(++index, entity);
-                return entity;
             }
+            map.put(++index, entity);
+            return entity;
+        }
 
             @Override
             public boolean existsByDoneIsFalseAndProject_Id(Integer projectId) {
-                return map.values().stream()
-                        .filter(group -> !group.isDone())
-                        .anyMatch(group -> group.getProject() != null && group.getProject().getId() == projectId);
-            }
-        };
+            return map.values().stream()
+                    .filter(group -> !group.isDone())
+                    .anyMatch(group -> group.getProject() != null && group.getProject().getId() == projectId);
+        }
     }
 }
