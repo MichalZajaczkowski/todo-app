@@ -2,8 +2,6 @@ package trainingUdemyProject.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Set;
 //import org.hibernate.annotations.Entity;
 //import org.hibernate.annotations.Table;
@@ -58,11 +56,11 @@ public class TaskGroup {
         this.tasks = tasks;
     }
 
-    Project getProject() {
+    public Project getProject() {
         return project;
     }
 
-    void setProject(Project project) {
+    public void setProject(Project project) {
         this.project = project;
     }
 }

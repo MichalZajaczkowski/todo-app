@@ -1,4 +1,4 @@
-package io.github.mat3e.logic;
+package trainingUdemyProject.logic;
 
 
 import org.springframework.stereotype.Service;
@@ -45,7 +45,8 @@ public class ProjectService {
                                             deadline.plusDays(projectStep.getDaysToDeadline()))
                                     ).collect(Collectors.toSet())
                     );
-                    return targetGroup;
+                    targetGroup.setProject(project);
+                    return taskGroupRepository.save(targetGroup);
                 }).orElseThrow(() -> new IllegalArgumentException("Project with given id not found"));
         return new GroupReadModel(result);
     }
